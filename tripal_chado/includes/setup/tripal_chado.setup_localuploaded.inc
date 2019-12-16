@@ -42,7 +42,7 @@ function tripal_chado_prepare_form_submit($form, $form_state) {
     global $user;
     $args = [];
     $includes = [
-      module_load_include('inc', 'tripal_chado', 'includes/setup/tripal_chado.setup'),
+      module_load_include('inc', 'tripal_chado', 'includes/setup/tripal_chado.setup_localuploaded'),
     ];
     tripal_add_job('Prepare Chado', 'tripal_chado',
       'tripal_chado_prepare_chado', $args,
@@ -59,7 +59,7 @@ function tripal_chado_prepare_form_submit($form, $form_state) {
 function tripal_chado_prepare_drush_submit() {
   $args = [];
   $includes = [
-    module_load_include('inc', 'tripal_chado', 'includes/setup/tripal_chado.setup'),
+    module_load_include('inc', 'tripal_chado', 'includes/setup/tripal_chado.setup_localuploaded'),
   ];
   tripal_add_job('Prepare Chado', 'tripal_chado',
     'tripal_chado_prepare_chado', $args,
@@ -77,8 +77,10 @@ function tripal_chado_load_ontologies() {
   chado_insert_db([
     'name' => 'NCIT',
     'description' => 'NCI Thesaurus OBO Edition.',
-    'url' => 'http://purl.obolibrary.org/obo/ncit.owl',
-    'urlprefix' => ' http://purl.obolibrary.org/obo/{db}_{accession}',
+    'path' => '{tripal_chado}/files/ncit.owl',
+    'auto_load' => TRUE,
+   #'url' => 'http://purl.obolibrary.org/obo/ncit.owl',
+   #'urlprefix' => ' http://purl.obolibrary.org/obo/{db}_{accession}',
   ]);
   chado_insert_cv(
     'ncit',
@@ -129,7 +131,8 @@ function tripal_chado_load_ontologies() {
     ],
     [
       'name' => 'Taxonomic Rank',
-      'path' => 'http://purl.obolibrary.org/obo/taxrank.obo',
+     #'path' => 'http://purl.obolibrary.org/obo/taxrank.obo',
+      'path' => '{tripal_chado}/files/taxrank.obo',
       'auto_load' => TRUE,
       'cv_name' => 'taxonomic_rank',
       'db_name' => 'TAXRANK',
@@ -150,7 +153,8 @@ function tripal_chado_load_ontologies() {
     ],
     [
       'name' => 'Sequence Ontology',
-      'path' => 'http://purl.obolibrary.org/obo/so.obo',
+     #'path' => 'http://purl.obolibrary.org/obo/so.obo',
+      'path' => '{tripal_chado}/files/so.obo',
       'auto_load' => TRUE,
       'cv_name' => 'sequence',
       'db_name' => 'SO',
